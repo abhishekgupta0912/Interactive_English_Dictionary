@@ -21,10 +21,16 @@ def findMeaning(word):
         listWord = []
         for i in result:
             listWord.append(i[0])
-        if len(df.get_close_matches(word, listWord, n=5, cutoff=0.7)) > 0:
-            x = df.get_close_matches(word, listWord, n=5, cutoff=0.7)
+        if len(df.get_close_matches(word, listWord, n=100, cutoff=0.8)) > 0:
+            x = df.get_close_matches(word, listWord, n=100, cutoff=0.8)
+            z = []
+            for r in x:
+                if r in z:
+                    continue
+                else:
+                    z.append(r)
             y = ""
-            for i in x:
+            for i in z:
                 y = y + " -- " + i + " -- "
             choice = input(
                 "Do you mean to find the meaning if the follwing words" + y + "Then type Yes or No\nYes\\No --> ")
@@ -42,9 +48,11 @@ word = input("Enter The Word To Find Its Meaning --> ")
 print()
 result = findMeaning(word)
 
-if result:
+if type(result) == list:
     print("The Meaning Of The Word -->")
     for i in result:
         print(" " * len("The Meaning Of The Word -->") + "--> " + i[1] + "\n")
+elif result:
+    print(result)
 else:
     print("There Is No Such Word In The Dictionary")
